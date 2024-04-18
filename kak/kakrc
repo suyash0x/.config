@@ -1,5 +1,7 @@
 source "%val{config}/fzf.kak"
 source "%val{config}/buffs.kak"
+source "%val{config}/branch.kak"
+
 
 add-highlighter global/ number-lines -relative
 colorscheme cc
