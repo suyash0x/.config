@@ -1,0 +1,104 @@
+source "%val{config}/fzf.kak"
+source "%val{config}/buffs.kak"
+
+add-highlighter global/ number-lines -relative
+colorscheme cc
+set-option global tabstop 4
+set-option global scrolloff "5,5"
+set-option global grepcmd 'rg --context=1 --line-number'
+set-option -add global ui_options terminal_assistant=none
+set-option -add global ui_options terminal_status_on_top=true
+set-option global startup_info_version 20221031
+
+declare-option -hidden str pairs_perl "require qw(%val{config}/pairs.pl)"
+
+map global normal '<c-b>' ': buffs<ret>'
+map global normal '<c-f>' ': fzf<ret>'
+map global normal '<c-d>' ': git diff<ret>'
+map global normal '<c-s>' ': git diff --staged<ret>'
+map global normal '<c-g>' ': grep-selection<ret>'
+map global normal '<c-t>' ': ctags-search '
+
+eval %sh{kak-lsp --kakoune -s $kak_session}  # Not needed if you load it with plug.kak.
+lsp-enable
+
+# copy to system clipboard
+hook global RegisterModified '"' %{ nop %sh{
+      printf %s "$kak_main_reg_dquote" | xsel --input --clipboard
+}}
+
+########format and lint#################
+
+hook global WinSetOption filetype=(javascript|typescript) %{
+  set-option window lintcmd 'run() { cat "$1" |npx eslint -f unix --stdin --stdin-filename "$kak_buffile";} && run'
+}
+
+
+hook global BufSetOption filetype=(javascript|typescript|json|html|css|typescriptreact|javascriptreact) %{
+    set-option buffer formatcmd "prettier --stdin-filepath=%val{buffile}"
+}
+
+hook global BufWritePre .*\.css %{
+    evaluate-commands %{
+        format
+    }
+}
+
+hook global BufWritePre .*\.(js|jsx|ts|tsx|json) %{
+    evaluate-commands %{
+        format
+        lint
+    }
+}
+
+
+
+define-command grep-selection %{
+	evaluate-commands %sh{
+    	selection=$(printf "$kak_selection" | awk '{print $1}')
+    	printf "%s\n" "grep %&$selection&"
+	}
+}
+
+
+hook global InsertChar [\[{("'`] %{
+    execute-keys <left>
+    eval %sh{
+        closing_bracket=$(printf "$kak_selection" | command perl -e "$kak_opt_pairs_perl")
+        printf "%s\n" "exec <right>$closing_bracket<left>"
+    }
+}
+
+
+hook global KakBegin .* %{
+        evaluate-commands %sh{
+        	path="$PWD"
+            while [ "$path" != "$HOME" ] && [ "$path" != "/" ]; do
+            	if [ -e "./tags" ]; then
+                	printf "%s\n" "set-option -add current ctagsfiles %{$path/tags}"
+                	break
+                else
+                	cd ..
+                    path="$PWD"
+                fi
+            done
+        }
+}
+
+
+
+hook global InsertChar j %{ try %{
+      exec -draft hH <a-k>jj<ret> d
+        exec <esc>
+}}
+
+
+
+map global user l %{:enter-user-mode lsp<ret>} -docstring "LSP mode"
+map global insert <tab> '<a-;>:try lsp-snippets-select-next-placeholders catch %{ execute-keys -with-hooks <lt>tab> }<ret>' -docstring 'Select next snippet placeholder'
+map global object a '<a-semicolon>lsp-object<ret>' -docstring 'LSP any symbol'
+map global object <a-a> '<a-semicolon>lsp-object<ret>' -docstring 'LSP any symbol'
+map global object f '<a-semicolon>lsp-object Function Method<ret>' -docstring 'LSP function or method'
+map global object t '<a-semicolon>lsp-object Class Interface Struct<ret>' -docstring 'LSP class interface or struct'
+map global object d '<a-semicolon>lsp-diagnostic-object --include-warnings<ret>' -docstring 'LSP errors and warnings'
+map global object D '<a-semicolon>lsp-diagnostic-object<ret>' -docstring 'LSP errors'
