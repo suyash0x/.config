@@ -1,4 +1,4 @@
-source "%val{config}/fzf.kak"
+source "%val{config}/find.kak"
 source "%val{config}/buffs.kak"
 source "%val{config}/branch.kak"
 
@@ -15,7 +15,7 @@ set-option global startup_info_version 20221031
 declare-option -hidden str pairs_perl "require qw(%val{config}/pairs.pl)"
 
 map global normal '<c-b>' ': buffs<ret>'
-map global normal '<c-f>' ': fzf<ret>'
+map global normal '<c-f>' ': find<ret>'
 map global normal '<c-d>' ': git diff<ret>'
 map global normal '<c-s>' ': git diff --staged<ret>'
 map global normal '<c-g>' ': grep-selection<ret>'
