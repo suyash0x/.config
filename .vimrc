@@ -12,6 +12,7 @@ call plug#begin()
 	Plug 'jiangmiao/auto-pairs'
 	Plug 'tpope/vim-fugitive'
 	Plug 'itchyny/lightline.vim'
+	Plug  'airblade/vim-gitgutter'
 
 call plug#end()
 
@@ -31,6 +32,8 @@ set tags=tags;
 let mapleader=" "
 set laststatus=2
 set noshowmode
+set signcolumn=yes
+set updatetime=100
 
 imap jj <Esc>
 nnoremap <silent> <leader>f :Files<CR>
