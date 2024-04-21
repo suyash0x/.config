@@ -11,6 +11,7 @@ call plug#begin()
 	Plug 'junegunn/fzf.vim'
 	Plug 'jiangmiao/auto-pairs'
 	Plug 'tpope/vim-fugitive'
+	Plug 'itchyny/lightline.vim'
 
 call plug#end()
 
@@ -28,6 +29,8 @@ set incsearch
 set noswapfile
 set tags=tags;
 let mapleader=" "
+set laststatus=2
+set noshowmode
 
 imap jj <Esc>
 nnoremap <silent> <leader>f :Files<CR>
@@ -77,5 +80,15 @@ au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#source
 			\ }))
 
 
+let g:lightline = {
+      \ 'colorscheme': 'apprentice',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'component_function': {
+      \   'gitbranch': 'FugitiveHead'
+      \ },
+      \ }
 
 
