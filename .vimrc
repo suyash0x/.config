@@ -40,7 +40,7 @@ nnoremap <silent> <leader>f :Files<CR>
 nnoremap <silent> <leader>b :Buffers<CR>
 nnoremap <silent> <leader>t :Tags<CR>
 
-autocmd BufWritePre *.js call FormatJsFiles()
+autocmd BufWritePre *.js,*jsx,*ts,*tsx,*html,*css call FormatJsFiles()
 
 
 function! FormatJsFiles ()
