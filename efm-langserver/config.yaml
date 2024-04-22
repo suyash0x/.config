@@ -5,14 +5,32 @@ tools:
   prettier: &prettier
     format-command: 'prettier --stdin-filepath ${INPUT}'
     format-stdin: true
+
+  javascript-eslint: &javascript-eslint
+    lint-command: 'eslint -f visualstudio --stdin --stdin-filename ${INPUT}'
+    lint-ignore-exit-code: true
+    lint-stdin: true
+    lint-formats:
+      - "%f(%l,%c): %tarning %m"
+      - "%f(%l,%c): %rror %m"
+
 languages:
+
   javascript:
     - <<: *prettier
+    - <<: *javascript-eslint
+
   javascriptreact:
     - <<: *prettier
+    - <<: *javascript-eslint
+
   typescript:
     - <<: *prettier
+    - <<: *javascript-eslint
+
   typescriptreact:
     - <<: *prettier
+    - <<: *javascript-eslint
+
   css:
     - <<: *prettier
