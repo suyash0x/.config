@@ -12,7 +12,8 @@ call plug#begin()
 	Plug 'jiangmiao/auto-pairs'
 	Plug 'tpope/vim-fugitive'
 	Plug 'itchyny/lightline.vim'
-	Plug  'airblade/vim-gitgutter'
+	Plug 'airblade/vim-gitgutter'
+	Plug 'tpope/vim-commentary'
 
 call plug#end()
 
@@ -40,7 +41,15 @@ nnoremap <silent> <leader>f :Files<CR>
 nnoremap <silent> <leader>b :Buffers<CR>
 nnoremap <silent> <leader>t :Tags<CR>
 
-autocmd BufWritePre *.js,*jsx,*ts,*tsx,*html,*css call FormatJsFiles()
+nnoremap <up> <nop>
+nnoremap <down> <nop>
+inoremap <up> <nop>
+inoremap <down> <nop>
+inoremap <left> <nop>
+inoremap <right> <nop>
+
+filetype plugin indent on
+
 
 
 function! FormatJsFiles ()
@@ -68,12 +77,20 @@ function! s:on_lsp_buffer_enabled() abort
 	nmap <buffer> K <plug>(lsp-hover)
 	nnoremap <buffer> <expr><c-f> lsp#scroll(+4)
 	nnoremap <buffer> <expr><c-d> lsp#scroll(-4)
+	autocmd! BufWritePre *js,*jsx,*.ts,*.tsx,*css call execute('LspDocumentFormatSync --server=efm-langserver')
 endfunction
 
 augroup lsp_install
 	au!
 	autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
 augroup END
+
+let g:lsp_settings = {
+  \  'efm-langserver': {
+  \    'disabled': 0,
+  \    'args': ['-c='.expand('~/.config/efm-langserver/config.yaml')],
+  \  },
+\}
 
 au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#file#get_source_options({
 			\ 'name': 'file',
