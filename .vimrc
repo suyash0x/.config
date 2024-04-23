@@ -39,7 +39,8 @@ set updatetime=100
 imap jj <Esc>
 nnoremap <silent> <leader>f :Files<CR>
 nnoremap <silent> <leader>b :Buffers<CR>
-nnoremap <silent> <leader>t :Tags<CR>
+nnoremap <silent> <leader>t :tags<cr>
+nnoremap <silent> <leader>k :LspHover<cr>
 
 nnoremap <up> <nop>
 nnoremap <down> <nop>
