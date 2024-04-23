@@ -35,6 +35,7 @@ set laststatus=2
 set noshowmode
 set signcolumn=yes
 set updatetime=100
+set showcmd
 
 imap jj <Esc>
 nnoremap <silent> <leader>f :Files<CR>
