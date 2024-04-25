@@ -3,7 +3,6 @@ call plug#begin()
 
 	Plug 'prabirshrestha/vim-lsp'
 	Plug 'mattn/vim-lsp-settings'
-	Plug 'morhetz/gruvbox'
 	Plug 'prabirshrestha/asyncomplete.vim'
 	Plug 'prabirshrestha/asyncomplete-lsp.vim'
 	Plug 'prabirshrestha/asyncomplete-file.vim'
@@ -14,11 +13,18 @@ call plug#begin()
 	Plug 'itchyny/lightline.vim'
 	Plug 'airblade/vim-gitgutter'
 	Plug 'tpope/vim-commentary'
+	Plug 'sainnhe/gruvbox-material'
 
 call plug#end()
 
+if has('termguicolors')
+   set termguicolors
+endif
 
-colorscheme gruvbox
+let g:gruvbox_material_background = 'hard'
+let g:gruvbox_material_better_performance = 1
+
+colorscheme gruvbox-material
 set background=dark
 syntax on
 set relativenumber
@@ -35,9 +41,9 @@ set laststatus=2
 set noshowmode
 set signcolumn=yes
 set updatetime=100
-set showcmd
 
 imap jj <Esc>
+set showcmd
 nnoremap <silent> <leader>f :Files<CR>
 nnoremap <silent> <leader>b :Buffers<CR>
 nnoremap <silent> <leader>t :tags<cr>
