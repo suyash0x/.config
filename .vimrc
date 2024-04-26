@@ -47,7 +47,7 @@ imap jj <Esc>
 set showcmd
 nnoremap <silent> <leader>f :Files<CR>
 nnoremap <silent> <leader>b :Buffers<CR>
-nnoremap <silent> <leader>t :tags<cr>
+nnoremap <silent> <leader>t :Tags<cr>
 nnoremap <silent> <leader>k :LspHover<cr>
 
 nnoremap <up> <nop>
