@@ -4,16 +4,15 @@ call plug#begin()
 	Plug 'prabirshrestha/vim-lsp'
 	Plug 'mattn/vim-lsp-settings'
 	Plug 'prabirshrestha/asyncomplete.vim'
-	Plug 'morhetz/gruvbox'
 	Plug 'prabirshrestha/asyncomplete-lsp.vim'
 	Plug 'prabirshrestha/asyncomplete-file.vim'
 	Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 	Plug 'junegunn/fzf.vim'
 	Plug 'jiangmiao/auto-pairs'
 	Plug 'tpope/vim-fugitive'
-	Plug 'itchyny/lightline.vim'
 	Plug 'airblade/vim-gitgutter'
 	Plug 'tpope/vim-commentary'
+	Plug 'sainnhe/gruvbox-material'
 
 call plug#end()
 
@@ -21,10 +20,12 @@ if has('termguicolors')
    set termguicolors
 endif
 
-let g:gruvbox_contrast_dark='hard'
-let g:gruvbox_sign_column='bg0'
 
-colorscheme gruvbox
+let g:gruvbox_material_background = 'hard'
+let g:gruvbox_material_better_performance = 1
+let g:gruvbox_material_foreground ='mix'
+
+colorscheme gruvbox-material
 set background=dark
 syntax on
 set relativenumber
@@ -106,17 +107,3 @@ au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#source
 			\ 'priority': 10,
 			\ 'completor': function('asyncomplete#sources#file#completor')
 			\ }))
-
-
-let g:lightline = {
-      \ 'colorscheme': 'apprentice',
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
-      \ },
-      \ 'component_function': {
-      \   'gitbranch': 'FugitiveHead'
-      \ },
-      \ }
-
-
