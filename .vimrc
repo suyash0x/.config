@@ -42,6 +42,7 @@ set laststatus=2
 set noshowmode
 set signcolumn=yes
 set updatetime=100
+set spell
 
 imap jj <Esc>
 set showcmd
@@ -58,16 +59,6 @@ inoremap <left> <nop>
 inoremap <right> <nop>
 
 filetype plugin indent on
-
-
-
-function! FormatJsFiles ()
-  	let save_cursor = getpos('.')
-    	let save_view = winsaveview()
-	silent! execute '%!npx prettier --stdin-filepath %'
-   	call setpos('.', save_cursor)
-    	call winrestview(save_view)
-endfunction
 
 
 function! s:on_lsp_buffer_enabled() abort
