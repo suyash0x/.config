@@ -43,6 +43,7 @@ set noshowmode
 set signcolumn=yes
 set updatetime=100
 set spell
+set laststatus=0
 
 imap jj <Esc>
 set showcmd
@@ -75,8 +76,8 @@ function! s:on_lsp_buffer_enabled() abort
 	nmap <buffer> [g <plug>(lsp-previous-diagnostic)
 	nmap <buffer> ]g <plug>(lsp-next-diagnostic)
 	nmap <buffer> K <plug>(lsp-hover)
-	nnoremap <buffer> <expr><c-f> lsp#scroll(+4)
-	nnoremap <buffer> <expr><c-d> lsp#scroll(-4)
+	nnoremap <buffer> <expr><c-f> lsp#scroll(+1)
+	nnoremap <buffer> <expr><c-d> lsp#scroll(-1)
 	autocmd! BufWritePre *js,*jsx,*.ts,*.tsx,*css call execute('LspDocumentFormatSync --server=efm-langserver')
 endfunction
 
