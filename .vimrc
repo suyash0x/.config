@@ -13,6 +13,7 @@ call plug#begin()
 	Plug 'airblade/vim-gitgutter'
 	Plug 'tpope/vim-commentary'
 	Plug 'sainnhe/gruvbox-material'
+	Plug 'pangloss/vim-javascript'
 
 call plug#end()
 
@@ -24,6 +25,7 @@ endif
 let g:gruvbox_material_background = 'hard'
 let g:gruvbox_material_better_performance = 1
 let g:gruvbox_material_foreground ='mix'
+let g:javascript_plugin_jsdoc = 1
 
 colorscheme gruvbox-material
 set background=dark
